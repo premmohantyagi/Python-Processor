@@ -26,7 +26,7 @@ Python runs entirely in the browser using [Pyodide](https://pyodide.org/) (CPyth
 
 1. Clone or download this repository into your web server's root directory:
    ```
-   git clone https://github.com/your-username/Python-Processor.git
+   git clone https://github.com/premmohantyagi/Python-Processor.git
    ```
 2. Open `http://localhost/Python-Processor/` in your browser.
 
