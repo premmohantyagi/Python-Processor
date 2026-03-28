@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Processor - Online Python Code Runner | Test Python Code Instantly</title>
+    <meta name="description" content="Free online Python processor to run, test, and debug Python code instantly in your browser. No setup required. Real-time output with instant execution.">
+    <meta name="keywords" content="Python processor, online Python compiler, Python code runner, run Python online, Python editor, Python tester, Python debugger, execute Python code, Python sandbox, Python playground">
+    <meta name="author" content="Python Processor">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Python Processor - Online Python Code Runner">
+    <meta property="og:description" content="Free online Python processor to run, test, and debug Python code instantly in your browser. No setup required.">
+    <meta property="og:site_name" content="Python Processor">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Python Processor - Online Python Code Runner">
+    <meta name="twitter:description" content="Free online Python processor to run, test, and debug Python code instantly in your browser. No setup required.">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Python Processor",
+        "description": "Free online Python processor to run, test, and debug Python code instantly in your browser. No setup required.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <rect width="28" height="28" rx="6" fill="#3B82F6"/>
+                    <text x="14" y="19" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="Inter">Py</text>
+                </svg>
+                <span class="logo-text">Python Processor</span>
+            </div>
+            <nav class="breadcrumb">
+                <span>Tools</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+                <span class="active">Python Processor</span>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="python-badge" id="pythonBadge">
+                <span class="badge-dot" id="badgeDot"></span>
+                <span id="pythonVersion">Loading Python...</span>
+            </div>
+            <div class="timeout-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                10s timeout
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+                <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="editor-container">
+            <!-- Input Panel -->
+            <div class="panel panel-input">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        Code Input
+                    </div>
+                    <div class="panel-actions">
+                        <button class="btn btn-primary" id="btnProcess" title="Run code (Ctrl+Enter)" disabled>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                            Process
+                        </button>
+                        <button class="btn btn-secondary" id="btnCopy" title="Copy code">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copy
+                        </button>
+                        <button class="btn btn-secondary" id="btnClear" title="Clear code">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="editor-wrapper">
+                    <div class="line-numbers" id="lineNumbers"></div>
+                    <textarea class="code-editor" id="codeInput" spellcheck="false" placeholder="Write your Python code here..."># Welcome to Python Processor!
+# Write your Python code and click Process or press Ctrl+Enter
+
+name = "World"
+print(f"Hello, {name}!")
+
+# Example: Simple loop
+for i in range(1, 6):
+    print(f"Count: {i}")
+
+# Example: List comprehension
+squares = [x**2 for x in range(1, 11)]
+print(f"\nSquares: {squares}")
+</textarea>
+                </div>
+            </div>
+
+            <!-- Resizer -->
+            <div class="resizer" id="resizer">
+                <div class="resizer-line"></div>
+            </div>
+
+            <!-- Output Panel -->
+            <div class="panel panel-output">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                        Output
+                        <span class="status-indicator" id="statusIndicator"></span>
+                    </div>
+                    <div class="panel-actions">
+                        <span class="execution-time" id="executionTime"></span>
+                        <button class="btn btn-secondary" id="btnCopyOutput" title="Copy output">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copy
+                        </button>
+                        <button class="btn btn-secondary" id="btnClearOutput" title="Clear output">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="output-wrapper">
+                    <pre class="output-content" id="outputContent"><span class="output-placeholder">Loading Python runtime (Pyodide)...</span></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SEO Content Section -->
+    <section class="seo-content">
+        <h1>Python Processor - Online Python Code Runner</h1>
+        <p>Python Processor is a free, browser-based tool to run and test Python code instantly. Whether you're a beginner learning Python or an experienced developer debugging a snippet, this tool lets you execute Python code with real-time output — no installation or setup required.</p>
+
+        <h2>How to Use</h2>
+        <ol>
+            <li>Write your Python code in the editor panel on the left.</li>
+            <li>Click the <strong>Process</strong> button or press <strong>Ctrl+Enter</strong> to execute.</li>
+            <li>View the output instantly in the right panel.</li>
+        </ol>
+
+        <h2>Features</h2>
+        <ul>
+            <li>Real-time Python code execution with instant output</li>
+            <li>Code editor with line numbers and tab support</li>
+            <li>Dark and light theme with persistent preference</li>
+            <li>Copy and clear functionality for input and output</li>
+            <li>Resizable split-panel layout</li>
+            <li>Execution timer and status indicators</li>
+            <li>Responsive design for mobile and desktop</li>
+            <li>Runs entirely in the browser using Pyodide (WebAssembly)</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        <h3>Is this Python code runner free?</h3>
+        <p>Yes, Python Processor is completely free to use with no registration required.</p>
+        <h3>Is my code safe?</h3>
+        <p>Your code runs entirely in your browser using Pyodide (Python compiled to WebAssembly). Nothing is sent to any server.</p>
+        <h3>Is there a time limit?</h3>
+        <p>Yes, code execution is limited to 10 seconds to prevent infinite loops and resource abuse.</p>
+    </section>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
