@@ -21,7 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function initPyodide() {
         try {
-            pyodide = await loadPyodide();
+            if (typeof loadPyodide === 'undefined') {
+                throw new Error('Pyodide script failed to load. Check your internet connection and try reloading.');
+            }
+            outputContent.innerHTML = '<span class="output-placeholder">Loading Python runtime... This may take a few seconds on first load.</span>';
+            pyodide = await loadPyodide({
+                indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/'
+            });
             const version = pyodide.runPython('import sys; sys.version.split()[0]');
             pythonVersion.textContent = `Python ${version}`;
             badgeDot.style.background = 'var(--success)';
@@ -30,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             pythonVersion.textContent = 'Failed to load';
             badgeDot.style.background = 'var(--error)';
-            outputContent.innerHTML = `<span class="output-error">Failed to load Python runtime: ${escapeHtml(err.message)}</span>`;
+            outputContent.innerHTML = `<span class="output-error">Failed to load Python runtime:\n${escapeHtml(err.message)}\n\nMake sure you are accessing this page via http://localhost/ (not as a local file).\nAlso check your internet connection — Pyodide is downloaded from a CDN on first load.</span>`;
         }
     }
 
